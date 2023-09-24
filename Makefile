@@ -1,5 +1,5 @@
 build:
-	docker compose -f local.yml; up --build -d --remove orphans
+	docker compose -f local.yml up --build -d --remove-orphans
 
 up:
 	docker compose -f local.yml up -d
@@ -20,7 +20,7 @@ show-logs-client:
 	docker compose -f local.yml logs client
 
 user:
-	docker run --rm invoice-app-api whoami
+	docker run --rm mern-invoice-api whoami
 
 volume:
-	docker volume inspect imvoice-app_mongodb-data
+	docker volume inspect mern-invoice_mongodb-data

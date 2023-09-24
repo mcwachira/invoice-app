@@ -3,7 +3,7 @@ import morgan from 'morgan'
 import chalk from 'chalk'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
-import { morganMiddleware, systemLogs } from './utils/Logger.js'
+import { morganMiddleware } from './utils/Logger.js'
 
 
 
@@ -22,9 +22,9 @@ app.use(morganMiddleware)
 
 
 
-app.get('/api', (req, res) => {
-    res.json("hello world")
-})
+app.get("/api/v1/test", (req, res) => {
+	res.json({ Hi: "Welcome to the Invoice App" });
+});
 
 app.listen(PORT, ()=> {
 
