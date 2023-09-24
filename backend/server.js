@@ -8,7 +8,7 @@ import cookieParser from 'cookie-parser'
 
 const app =  express()
 
-const PORT = 8000 || process.env.PORT
+const PORT = 1997 || process.env.PORT
 if(process.env.NODE_ENV === 'dev'){
     app.use(morgan('dev'))
 }
@@ -26,6 +26,6 @@ app.get('/api', (req, res) => {
 
 app.listen(PORT, ()=> {
 
-     console.log(`${chalk.green.bold('app is running in ')} ${chalk.green.yellow(process.env.NODE_ENV)}mode on port ${chalk.blue.bold(PORT)}`
+     console.log(`${chalk.green.bold('app is running in ')} ${chalk.green.yellow(process.env.NODE_ENV)} mode on port ${chalk.blue.bold(PORT)}`
      )
 })
