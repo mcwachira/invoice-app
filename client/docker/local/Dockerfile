@@ -2,8 +2,6 @@ ARG NODE_VERSION=18.17.0-alpine
 
 FROM    node:${NODE_VERSION}
 
-
-
 ARG APP_HOME=/app
 
 WORKDIR ${APP_HOME}

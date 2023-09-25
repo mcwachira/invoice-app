@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import { morganMiddleware } from './utils/Logger.js'
 import connectToDB from './config/connectToDb.js'
+import mongoSanitize from 'express-mongo-sanitize'
 
 
 
@@ -19,6 +20,9 @@ if(process.env.NODE_ENV === 'dev'){
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 app.use(cookieParser())
+app.use(mongoSanitize())
+
+
 app.use(morganMiddleware)
 
 
