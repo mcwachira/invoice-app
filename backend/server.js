@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser'
 import { morganMiddleware } from './utils/Logger.js'
 import connectToDB from './config/connectToDb.js'
 import mongoSanitize from 'express-mongo-sanitize'
-
+import { errorHandler,notFound } from './middleware/errorMiddleware.js'
 
 
 await connectToDB()
@@ -30,6 +30,9 @@ app.use(morganMiddleware)
 app.get("/api/v1/test", (req, res) => {
 	res.json({ Hi: "Welcome to the Invoice App" });
 });
+
+app.use(notFound)
+app.use(errorHandler)
 
 app.listen(PORT, ()=> {
 
