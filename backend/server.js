@@ -4,10 +4,11 @@ import chalk from 'chalk'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import { morganMiddleware } from './utils/Logger.js'
+import connectToDB from './config/connectToDb.js'
 
 
 
-
+await connectToDB()
 const app =  express()
 
 const PORT = 1997 || process.env.PORT
