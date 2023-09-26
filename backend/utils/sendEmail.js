@@ -1,15 +1,16 @@
 import 'dotenv/config'
 import fs from 'fs'
+import path from "path";
 import handlebars from 'handlebars'
 import { fileURLToPath } from 'url'
-import transporter from '../helpers/emailTransport'
-import { systemLogs } from './Logger'
+import transporter from '../helpers/emailTransport.js'
+import { systemLogs } from './Logger.js'
 
 
-const __filename =  fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const sendEmail = async(email. subject, payload, template) => {
+const sendEmail = async(email, subject, payload, template) => {
 
     try{
 
@@ -27,7 +28,7 @@ const sendEmail = async(email. subject, payload, template) => {
             html:compiledTemplate(payload)
         };
 
-        await transporter.sendEmail(emailOptions)
+        await transporter.sendMail(emailOptions)
     }catch(error){
         systemLogs.error(`email not sent:${error}`)
     }

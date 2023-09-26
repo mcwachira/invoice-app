@@ -15,7 +15,7 @@ services:
       #   - "1997:1997"
       environment:
         NODE_ENV: ${NODE_ENV}
-        MONGO_URL: mongodb://${MONGO_ROOT_USERNAME}:${MONGO_ROOT_PASSWORD}@mongodb
+        MONGO_URI: mongodb://${MONGO_ROOT_USERNAME}:${MONGO_ROOT_PASSWORD}@mongodb
         FORCE_COLOR:  1
       networks:
         - invoice
@@ -34,7 +34,7 @@ services:
 
 
     mongodb:
-      image:  mongo:6-jammy
+      image: mongo:5.0.6-focal
       restart:  always
       ports:
         - "27017:27017"

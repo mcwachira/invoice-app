@@ -1,13 +1,13 @@
 import express from 'express'
 import morgan from 'morgan'
 import chalk from 'chalk'
-import dotenv from 'dotenv'
+import "dotenv/config";
 import cookieParser from 'cookie-parser'
-import { morganMiddleware } from './utils/Logger.js'
+import { morganMiddleware, systemLogs } from './utils/Logger.js'
 import connectToDB from './config/connectToDb.js'
 import mongoSanitize from 'express-mongo-sanitize'
 import { errorHandler,notFound } from './middleware/errorMiddleware.js'
-
+import authRoutes from './routes/authRoutes.js'
 
 await connectToDB()
 const app =  express()
@@ -30,6 +30,11 @@ app.use(morganMiddleware)
 app.get("/api/v1/test", (req, res) => {
 	res.json({ Hi: "Welcome to the Invoice App" });
 });
+
+
+//auth routes
+app.use("/api/v1/auth", authRoutes)
+
 
 app.use(notFound)
 app.use(errorHandler)

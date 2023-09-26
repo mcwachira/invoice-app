@@ -1,5 +1,5 @@
 import rateLimit from "express-rate-limit";
-import { systemLogs } from "../utils/Logger";
+import { systemLogs } from "../utils/Logger.js";
 
 //api limiter
 

@@ -1,8 +1,11 @@
 import chalk from "chalk";
+import "dotenv/config";
 import mongoose from "mongoose";
-import { systemLogs } from "../utils/Logger";
+import { systemLogs } from "../utils/Logger.js";
+
 
 const connectToDB = async() => {
+    console.log(process.env.MONGO_URI)
     try{
         const connectionParams = {
             dbName:process.env.DB_NAME,
@@ -22,3 +25,5 @@ const connectToDB = async() => {
         process.exit(1)
     }
 }
+
+export default connectToDB

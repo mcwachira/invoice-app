@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import 'dotenv/config'
 import validator from "validator";
-import { USER, User } from "../constants";
+import { USER, ADMIN} from "../constants/index.js";
+import bcrypt from 'bcryptjs'
 
 
 const {Schema} = mongoose
@@ -32,7 +33,7 @@ const userSchema = new Schema({
         required:true,
         trim:true,
         validate:[
-            validator.isAlphanumeric, 'firstName can only have alpha numeric values . Noi special characters allowed'
+            validator.isAlphanumeric, 'firstName can only have alpha numeric values . No special characters allowed'
         ]
     },
     lastName:{
@@ -40,7 +41,7 @@ const userSchema = new Schema({
         required:true,
         trim:true,
         validate:[
-            validator.isAlphanumeric, 'LastName can only have alpha numeric values . Noi special characters allowed'
+            validator.isAlphanumeric, 'LastName can only have alpha numeric values . No special characters allowed'
         ]
     },
     password:{
@@ -67,7 +68,7 @@ required:true,
 default:false
     },
     provider:{
-        type:Sting,
+        type:String,
         required:true,
         default:'email'
 
@@ -104,7 +105,7 @@ default:false
 })
 
 userSchema.pre('save', async function(next) {
-    if(this.roles.length === 0) {
+    if(this.role.length === 0) {
         this.roles.push(USER)
         next()
     }
@@ -114,19 +115,32 @@ userSchema.pre('save', async function(next) {
  if(!this.isModified('password')){
     return next()
  }
+
+userSchema.pre("save", async function (next) {
+	if (!this.isModified("password")) {
+		return next();
+	}
+
+	const salt = await bcrypt.genSalt(10);
+	this.password = await bcrypt.hash(this.password, salt);
+
+	this.passwordConfirm = undefined;
+	next();
+});
+
+userSchema.pre("save", async function (next) {
+	if (!this.isModified("password") || this.isNew) {
+		return next();
+	}
+
+	this.passwordChangedAt = Date.now();
+	next();
+});
 })
 
-userSchema.pre('save', async function(next) {
-    if(this.roles.length === 0) {
-        this.roles.push(USER)
-        next()
-    }
-})
 
-const salt = await bcrypt.genSalt(10)
-this.password = await bcrypt.hash(this.password , salt)
-this.passwordConfirm = undefined
-next()
+
+
 
 userSchema.pre('save', async function(next) {
  if(!this.isModified('password') || this.isNew){
