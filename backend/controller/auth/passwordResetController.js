@@ -19,13 +19,11 @@ const resetPasswordRequest = asyncHandler(async (req, res) => {
     throw new Error("You must  enter your email address");
   }
 
-  const existingUser = await User.findOne({
-    email,
-  }).select("-passwordConfirm");
+  const existingUser = await User.findOne({ email }).select("-passwordConfirm");
 
   if (!existingUser) {
     res.status(400);
-    throw new Error(" We are unable to find a user with that email");
+    throw new Error(" This Email is not associated with any account");
   }
 
   let verificationToken = await VerificationToken.findOne({
@@ -95,6 +93,7 @@ const resetPassword = asyncHandler(async (req, res) => {
 
   const passwordResetToken = await VerificationToken.findOne({ userId });
 
+  console.log(passwordResetToken);
   if (!passwordResetToken) {
     res.status(400);
     throw new Error(
@@ -118,7 +117,7 @@ const resetPassword = asyncHandler(async (req, res) => {
       user.email,
       "Password Reset Success",
       payload,
-      "./emails/template/resetPassword.handlebars"
+      "./emails/templates/resetPassword.handlebars"
     );
 
     res.json({
