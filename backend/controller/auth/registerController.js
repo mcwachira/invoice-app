@@ -12,86 +12,84 @@ const { randomBytes } = await import("crypto");
 // $-auth    Public
 
 const registerUser = asyncHandler(async (req, res) => {
-	const { email, username, firstName, lastName, password, passwordConfirm } =
-		req.body;
+  const { email, username, firstName, lastName, password, passwordConfirm } =
+    req.body;
 
-	if (!email) {
-		res.status(400);
-		throw new Error("An email address is required");
-	}
+  if (!email) {
+    res.status(400);
+    throw new Error("An email address is required");
+  }
 
-	if (!username) {
-		res.status(400);
-		throw new Error("A username is required");
-	}
-	if (!firstName || !lastName) {
-		res.status(400);
-		throw new Error(
-			"You must enter a full name with a first and last name"
-		);
-	}
+  if (!username) {
+    res.status(400);
+    throw new Error("A username is required");
+  }
+  if (!firstName || !lastName) {
+    res.status(400);
+    throw new Error("You must enter a full name with a first and last name");
+  }
 
-	if (!password) {
-		res.status(400);
-		throw new Error("You must enter a password");
-	}
-	if (!passwordConfirm) {
-		res.status(400);
-		throw new Error("Confirm password field is required");
-	}
+  if (!password) {
+    res.status(400);
+    throw new Error("You must enter a password");
+  }
+  if (!passwordConfirm) {
+    res.status(400);
+    throw new Error("Confirm password field is required");
+  }
 
-	const userExists = await User.findOne({ email });
+  const userExists = await User.findOne({ email });
 
-	if (userExists) {
-		res.status(400);
-		throw new Error(
-			"The email address you've entered is already associated with another account"
-		);
-	}
+  if (userExists) {
+    res.status(400);
+    throw new Error(
+      "The email address you've entered is already associated with another account"
+    );
+  }
 
-	const newUser = new User({
-		email,
-		username,
-		firstName,
-		lastName,
-		password,
-		passwordConfirm,
-	});
+  const newUser = new User({
+    email,
+    username,
+    firstName,
+    lastName,
+    password,
+    passwordConfirm,
+  });
 
-	const registeredUser = await newUser.save();
+  const registeredUser = await newUser.save();
 
-	if (!registeredUser) {
-		res.status(400);
-		throw new Error("User could not be registered");
-	}
+  if (!registeredUser) {
+    res.status(400);
+    throw new Error("User could not be registered");
+  }
 
-	if (registeredUser) {
-		const verificationToken = randomBytes(32).toString("hex");
+  if (registeredUser) {
+    const verificationToken = randomBytes(32).toString("hex");
 
-		let emailVerificationToken = await new VerificationToken({
-			_userId: registeredUser._id,
-			token: verificationToken,
-		}).save();
+    let emailVerificationToken = await new VerificationToken({
+      _userId: registeredUser._id,
+      token: verificationToken,
+    }).save();
 
-		const emailLink = `${domainURL}/api/v1/auth/verify/${emailVerificationToken.token}/${registeredUser._id}`;
+    const emailLink = `${domainURL}/api/v1/auth/verify/${emailVerificationToken.token}/${registeredUser._id}`;
 
-		const payload = {
-			name: registeredUser.firstName,
-			link: emailLink,
-		};
+    const payload = {
+      name: registeredUser.firstName,
+      link: emailLink,
+    };
 
-		await sendEmail(
-			registeredUser.email,
-			"Account Verification",
-			payload,
-			"./emails/templates/accountVerification.handlebars"
-		);
+    await sendEmail(
+      registeredUser.email,
+      "Account Verification",
+      payload,
+      "./emails/templates/accountVerification.handlebars"
+    );
 
-		res.json({
-			success: true,
-			message: `A new user ${registeredUser.firstName} has been registered! A Verification email has been sent to your account. Please verify within 15 minutes`,
-		});
-	}
+    res.json({
+      success: true,
+      message: `A new user ${registeredUser.firstName} has been registered! A Verification email has been sent to your account. Please verify within 15 minutes`,
+    });
+  }
 });
 
 export default registerUser;
