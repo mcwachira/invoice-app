@@ -55,9 +55,9 @@ const loginUser = asyncHandler(async (req, res) => {
         id: existingUser._id,
         // roles: existingUser.roles,
       },
-      process.env.JWT_ACCESS_REFRESH_SECRET_KEY,
+      process.env.JWT_REFRESH_SECRET_KEY,
       {
-        expiresIn: "1D",
+        expiresIn: "1d",
       }
     );
     const cookies = req.cookies;
