@@ -4,7 +4,7 @@ import User from "../../models/userModel.js";
 import { systemLogs } from "../../utils/Logger.js";
 
 // $-title  Get User Profile
-// $-path    POST /api/v1/user/profile
+// $-path    GET /api/v1/user/profile
 // $-auth    Private
 
 const getUserProfile = asyncHandler(async (req, res) => {
