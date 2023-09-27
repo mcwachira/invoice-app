@@ -14,14 +14,14 @@ const { randomBytes } = await import("crypto");
 const ResendEmailVerificationToken = asyncHandler(async (req, res) => {
   const { email } = req.body;
 
-  const user = await User.findOne({
-    email,
-  });
-
   if (!email) {
     res.status(400);
     throw new Error(" An email ,must be provided");
   }
+
+  const user = await User.findOne({
+    email,
+  });
 
   if (!user) {
     res.status(400);
