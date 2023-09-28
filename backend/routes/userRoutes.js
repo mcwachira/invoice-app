@@ -6,6 +6,7 @@ import deleteMyAccount from "../controller/user/deleteMyAccount.js";
 import getAllUsersAccounts from "../controller/user/getAllUsersAccount.js";
 import role from "../middleware/roleMiddleware.js";
 import deleteUserAccount from "../controller/user/deleteUserAccount.js";
+import deactivateUser from "../controller/user/deactivateUser.js";
 
 const router = express.Router();
 
@@ -25,4 +26,10 @@ router.delete(
   deleteUserAccount
 );
 
+router.patch(
+  "/:id/deactivate",
+  checkAuth,
+  role.checkRole(role.ROLES.Admin),
+  deactivateUser
+);
 export default router;
