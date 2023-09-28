@@ -1,13 +1,34 @@
-import React from 'react'
+import React from "react";
+import { CssBaseline } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+import { ToastContainer } from "react-toastify";
+import { Routes, Route } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.min.css";
+import Footer from "./components/Footer";
+import Layout from "./components/Layout";
+import NotFound from "./components/NotFound";
+import { customTheme } from "./customTheme";
+import useTitle from "./hooks/useTitle";
+import HomePage from "./pages/HomePage.jsx";
 
 const App = () => {
+  useTitle("Invoice app -Home");
   return (
-    <div>
-      <h1>
-        Welcome to the invoice app !!!!
-      </h1>
-    </div>
-  )
-}
+    <ThemeProvider theme={customTheme}>
+      <CssBaseline />
 
-export default App
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+
+      <Footer />
+      <ToastContainer theme="dark" />
+    </ThemeProvider>
+  );
+};
+
+export default App;
