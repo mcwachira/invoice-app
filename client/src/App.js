@@ -12,6 +12,7 @@ import useTitle from "./hooks/useTitle";
 import HomePage from "./pages/HomePage.jsx";
 import RegisterPage from "./features/auth/pages/RegisterPage";
 import VerifiedPage from "./features/auth/pages/VerifiedPage";
+import LoginPage from "./features/auth/pages/LoginPage";
 
 const App = () => {
   useTitle("Invoice app -Home");
@@ -24,6 +25,7 @@ const App = () => {
           <Route index element={<HomePage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="auth/verified" element={<VerifiedPage />} />
+          <Route path="login" element={<LoginPage />} />
 
           <Route path="*" element={<NotFound />} />
         </Route>
