@@ -10,6 +10,8 @@ import NotFound from "./components/NotFound";
 import { customTheme } from "./customTheme";
 import useTitle from "./hooks/useTitle";
 import HomePage from "./pages/HomePage.jsx";
+import RegisterPage from "./features/auth/pages/RegisterPage";
+import VerifiedPage from "./features/auth/pages/VerifiedPage";
 
 const App = () => {
   useTitle("Invoice app -Home");
@@ -20,6 +22,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="auth/verified" element={<VerifiedPage />} />
 
           <Route path="*" element={<NotFound />} />
         </Route>
