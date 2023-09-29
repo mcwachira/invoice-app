@@ -15,6 +15,7 @@ import VerifiedPage from "./features/auth/pages/VerifiedPage";
 import LoginPage from "./features/auth/pages/LoginPage";
 import Navbar from "./components/Navbar";
 import { useSelector } from "react-redux";
+import ResendEmailTokenPage from "./features/auth/pages/ResendEmailTokenPage";
 
 const App = () => {
   useTitle("Invoice app -Home");
@@ -32,7 +33,7 @@ const App = () => {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="auth/verified" element={<VerifiedPage />} />
           <Route path="login" element={<LoginPage />} />
-
+          <Route path="resend" element={<ResendEmailTokenPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
