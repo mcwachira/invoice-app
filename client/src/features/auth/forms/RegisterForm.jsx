@@ -271,6 +271,26 @@ const RegisterForm = () => {
                     )}
                   </Stack>
                   {/* password strength indicator */}
+                  {/* <FormControl fullWidth sx={{ mt: 2 }}>
+                    <Grid container spacing={2} alignItems="center">
+                      <Grid item>
+                        <Box
+                          sx={{
+                            bgcolor: level?.color,
+                            width: 350,
+                            height: 8,
+                            borderRadius: "7px",
+                          }}
+                        />
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="subtitle1" fontSize="0.75rem">
+                          {level?.label}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </FormControl> */}
+
                   <FormControl fullWidth sx={{ mt: 2 }}>
                     <Grid container spacing={2} alignItems="center">
                       <Grid item>
