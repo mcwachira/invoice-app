@@ -51,8 +51,8 @@ const App = () => {
             <Route path="dashboard" element={<DashBoardPage />} />
           </Route>
           {/* private routes - Admin */}
-          <Route element={<AuthRequired allowedRoles={[ROLES.Adnim]} />}>
-            <Route path="dashboard" element={<UsersListPage />} />
+          <Route element={<AuthRequired allowedRoles={[ROLES.Admin]} />}>
+            <Route path="users" element={<UsersListPage />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Route>

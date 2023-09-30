@@ -34,7 +34,7 @@ app.get("/api/v1/test", (req, res) => {
 app.use("/api/v1/auth", authRoutes);
 
 //user routes
-app.use("/api/v1/user", apiLimiter, userRoutes);
+app.use("/api/v1/users", apiLimiter, userRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

@@ -40,6 +40,8 @@ const baseQueryWithRefreshToken = async (args, api, extraOptions) => {
 export const baseApiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithRefreshToken,
+
+  //caching of data by providing tags
   tagTypes: ["User", "Customer", "Document"],
   endpoints: (builder) => ({}),
 });
