@@ -11,7 +11,7 @@ const { randomBytes } = await import("crypto");
 // $-path POST /api/v1/auth/resend_password_request/
 // $-auth Public
 
-const resetPasswordRequest = asyncHandler(async (req, res) => {
+export const resetPasswordRequest = asyncHandler(async (req, res) => {
   const { email } = req.body;
 
   if (!email) {
@@ -69,7 +69,7 @@ const resetPasswordRequest = asyncHandler(async (req, res) => {
 // $-path    POST /api/v1/auth/reset_password
 // $-auth    Public
 
-const resetPassword = asyncHandler(async (req, res) => {
+export const resetPassword = asyncHandler(async (req, res) => {
   const { password, passwordConfirm, userId, emailToken } = req.body;
 
   if (!password) {
@@ -126,5 +126,3 @@ const resetPassword = asyncHandler(async (req, res) => {
     });
   }
 });
-
-export { resetPasswordRequest, resetPassword };

@@ -9,7 +9,7 @@ import { styled, useTheme } from "@mui/material/styles";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { isExpired } from "react-jwt";
-import {} from "../../features/auth/authSlice";
+import { logOut } from "../../features/auth/authSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Logo from "./Logo";
@@ -84,9 +84,10 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const AuthNav = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { user, googleToken } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const theme = useTheme();
 
   const [open, setOpen] = useState(false);
@@ -94,6 +95,18 @@ const AuthNav = () => {
   const handleDrawerOpen = () => {
     setOpen(true);
   };
+
+  useEffect(() => {
+    if (googleToken) {
+      const isMyTokenExpired = isExpired(googleToken);
+
+      if (isMyTokenExpired) {
+        dispatch(logOut());
+        navigate("/login");
+        toast.warning("Your session has expired , login again");
+      }
+    }
+  }, [dispatch, navigate, googleToken]);
 
   const handleDrawerClose = () => {
     setOpen(false);
