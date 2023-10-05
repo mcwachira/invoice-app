@@ -9,6 +9,7 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.user?.accessToken;
     const googleToken = getState().auth.user?.googleToken;
+    console.log(googleToken);
 
     if (token) {
       headers.set("authorization", `Bearer ${token}`);

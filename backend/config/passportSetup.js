@@ -28,9 +28,9 @@ const googleAuth = () => {
             const name = profile.displayName.split(" ");
 
             User.create({
-              userName: profile._json.give_name,
+              username: profile._json.given_name,
               firstName: name[0],
-              lastName: [1],
+              lastName: name[1],
               avatar: profile._json.picture,
               email: profile._json.email,
               googleID: profile.id,
