@@ -4,7 +4,7 @@ export const usersApiSlice = baseApiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllUsers: builder.query({
       query: () => ({
-        url: "/users/all",
+        url: "/user/all",
         validateStatus: (response, result) => {
           return response.status === 200 && !result.isError;
         },

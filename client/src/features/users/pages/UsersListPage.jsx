@@ -37,19 +37,22 @@ import {
 } from "../usersApiSlice";
 
 const UserListPage = () => {
-  useTitle("All Users - Invoice App");
+  useTitle("All Users - MERN Invoice");
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
   const { data, isLoading, isSuccess, isError, error } = useGetAllUsersQuery(
-    "allUserList",
+    "allUsersList",
     {
-      // after how long data will be fetched
-      pollingInterval: 6000,
+      pollingInterval: 60000,
       refetchOnFocus: true,
       refetchOnMountOrArgChange: true,
     }
   );
+
+  const [deleteUser] = useDeleteUserMutation();
+  const [deactivateUser] = useDeactivateUserMutation();
 
   const rows = data?.users;
 
@@ -65,12 +68,46 @@ const UserListPage = () => {
     setPage(0);
   };
 
+  const deactivateUserHandler = async (id) => {
+    try {
+      await deactivateUser(id).unwrap();
+      toast.success("User deactivated");
+    } catch (err) {
+      const message = err.data.message;
+      toast.error(message);
+    }
+  };
+
+  const deleteHandler = async (id) => {
+    try {
+      if (window.confirm("Are you sure you want to delete this user?")) {
+        await deleteUser(id).unwrap();
+        toast.success("User deleted successfully");
+      }
+    } catch (err) {
+      const message = err.data.message;
+      toast.error(message);
+    }
+  };
+
   useEffect(() => {
     if (isError) {
       const message = error.data.message;
       toast.error(message);
     }
   }, [error, isError]);
+
+  const CustomTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} arrow classes={{ popper: className }} />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.arrow}`]: {
+      color: theme.palette.common.black,
+    },
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: theme.palette.common.black,
+      fontSize: 18,
+    },
+  }));
 
   return (
     <Container component="main" maxWidth="lg" sx={{ mt: 10 }}>
@@ -88,15 +125,13 @@ const UserListPage = () => {
         <Typography variant="h1"> Users</Typography>
       </Box>
       <StyledDivider />
-
       <Box
         sx={{
           display: "flex",
           flexDirection: "row",
         }}
       >
-        <Typography variant="h4"> Total:</Typography>
-
+        <Typography variant="h4"> Total: </Typography>
         <Badge
           badgeContent={data?.count}
           color="primary"
@@ -105,7 +140,6 @@ const UserListPage = () => {
           <GroupIcon color="action" fontSize="large" />
         </Badge>
       </Box>
-
       {isLoading ? (
         <Spinner />
       ) : (
@@ -126,7 +160,7 @@ const UserListPage = () => {
 
             <TableBody>
               {isSuccess && (
-                <StyledTableRow>
+                <>
                   {(rowsPerPage > 0
                     ? rows.slice(
                         page * rowsPerPage,
@@ -158,11 +192,14 @@ const UserListPage = () => {
                       <StyledTableCell align="right">
                         {moment(row?.dueDate).format("DD-MM-YYYY")}
                       </StyledTableCell>
-
-                      <StyledTableCell align="right">
-                        <Box>
-                          <Checkbox />
-                        </Box>
+                      <StyledTableCell>
+                        <CustomTooltip title="Uncheck to deactivate user">
+                          <Checkbox
+                            color="success"
+                            checked={row?.active}
+                            onChange={() => deactivateUserHandler(row._id)}
+                          />
+                        </CustomTooltip>
                       </StyledTableCell>
                       <StyledTableCell align="right">
                         <Box>
@@ -172,14 +209,14 @@ const UserListPage = () => {
                             sx={{
                               cursor: "pointer",
                             }}
+                            onClick={() => deleteHandler(row._id)}
                           />
                         </Box>
                       </StyledTableCell>
                     </StyledTableRow>
                   ))}
-                </StyledTableRow>
+                </>
               )}
-
               {/* control how emptyRows are displayed */}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 53 * emptyRows }}>
