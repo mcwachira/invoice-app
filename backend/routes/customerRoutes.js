@@ -5,7 +5,6 @@ import updateCustomerInfo from "../controller/customers/updateCustomerInfo.js";
 import getAllUserCustomer from "../controller/customers/getAllUserCustomers.js";
 import getSingleUserCustomer from "../controller/customers/getSingleUserCustomer.js";
 import checkAuth from "../middleware/checkAuthMiddleware.js";
-import { loginLimiter } from "../middleware/apiLimiter.js";
 
 const router = express.Router();
 
