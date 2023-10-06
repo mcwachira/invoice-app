@@ -22,6 +22,8 @@ import AuthRequired from "./components/AuthRequired";
 import { ROLES } from "./config/roles";
 import DashBoardPage from "./pages/DashBoardPage";
 import UsersListPage from "./features/users/pages/UsersListPage";
+import ProfilePage from "./features/users/pages/ProfilePage";
+import EditProfileForm from "./features/users/pages/EditProfileForm";
 
 const App = () => {
   useTitle("Invoice app -Home");
@@ -49,6 +51,8 @@ const App = () => {
           {/* private routes - User */}
           <Route element={<AuthRequired allowedRoles={[ROLES.User]} />}>
             <Route path="dashboard" element={<DashBoardPage />} />
+            <Route path="profile" element={<ProfilePage />} />
+            <Route path="edit-profile" element={<EditProfileForm />} />
           </Route>
           {/* private routes - Admin */}
           <Route element={<AuthRequired allowedRoles={[ROLES.Admin]} />}>

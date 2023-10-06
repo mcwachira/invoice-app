@@ -47,13 +47,13 @@ app.get("/api/v1/test", (req, res) => {
 app.use("/api/v1/auth", authRoutes);
 
 //user routes
-app.use("/api/v1/users", apiLimiter, userRoutes);
+app.use("/api/v1/user", apiLimiter, userRoutes);
 
 //customer routes
 
 app.use("/api/v1/customer", apiLimiter, customerRoutes);
 app.use("/api/v1/document", apiLimiter, documentRoutes);
-app.use("/api/v1/uploads", apiLimiter, uploadRoutes);
+app.use("/api/v1/upload", apiLimiter, uploadRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
