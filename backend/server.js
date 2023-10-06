@@ -1,4 +1,6 @@
 import express from "express";
+import path from "path";
+
 import morgan from "morgan";
 import chalk from "chalk";
 import "dotenv/config";
@@ -14,8 +16,12 @@ import documentRoutes from "./routes/documentRoutes.js";
 import { apiLimiter } from "./middleware/apiLimiter.js";
 import passport from "passport";
 import googleAuth from "./config/passportSetup.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
 await connectToDB();
 const app = express();
+
+const __dirname = path.resolve();
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 const PORT = 1997 || process.env.PORT;
 if (process.env.NODE_ENV === "dev") {
@@ -47,6 +53,7 @@ app.use("/api/v1/users", apiLimiter, userRoutes);
 
 app.use("/api/v1/customer", apiLimiter, customerRoutes);
 app.use("/api/v1/document", apiLimiter, documentRoutes);
+app.use("/api/v1/uploads", apiLimiter, uploadRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
