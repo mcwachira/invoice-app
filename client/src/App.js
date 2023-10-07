@@ -24,6 +24,10 @@ import DashBoardPage from "./pages/DashBoardPage";
 import UsersListPage from "./features/users/pages/UsersListPage";
 import ProfilePage from "./features/users/pages/ProfilePage";
 import EditProfileForm from "./features/users/pages/EditProfileForm";
+import CustomersPage from "./features/customers/pages/CustomersPage";
+import CustomerCreateForm from "./features/customers/pages/CustomerCreateForm";
+import SingleCustomerPage from "./features/customers/pages/SingleCustomer";
+import CustomerEditForm from "./features/customers/pages/CustomerEditForm";
 
 const App = () => {
   useTitle("Invoice app -Home");
@@ -53,6 +57,16 @@ const App = () => {
             <Route path="dashboard" element={<DashBoardPage />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="edit-profile" element={<EditProfileForm />} />
+            <Route path="customers" element={<CustomersPage />} />
+            <Route path="create-customer" element={<CustomerCreateForm />} />
+            <Route
+              path="single-customer/:custId"
+              element={<SingleCustomerPage />}
+            />
+            <Route
+              path="edit-customer/:custId"
+              element={<CustomerEditForm />}
+            />
           </Route>
           {/* private routes - Admin */}
           <Route element={<AuthRequired allowedRoles={[ROLES.Admin]} />}>

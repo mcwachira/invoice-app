@@ -1,9 +1,9 @@
 import { baseApiSlice } from "../api/baseApiSlice";
 
-export const customerApiSlice = baseApiSlice.injectEndPoints({
+export const customerApiSlice = baseApiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllUserCustomers: builder.query({
-      query: (page = 1) => `/customer/a;;?page=${page}`,
+      query: (page = 1) => `/customer/all?page=${page}`,
       providesTags: ["Customer"],
     }),
     createCustomer: builder.mutation({
@@ -41,5 +41,6 @@ export const {
   useGetAllUserCustomersQuery,
   useCreateCustomerMutation,
   useGetSingleCustomerQuery,
+  useUpdateCustomerInfoMutation,
   useDeleteCustomerMutation,
 } = customerApiSlice;
