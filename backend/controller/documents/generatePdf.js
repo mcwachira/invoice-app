@@ -5,6 +5,7 @@ import transporter from "../../helpers/emailTransport.js";
 import emailTemplate from "../../utils/pdf/emailTemplate.js";
 import options from "../../utils/pdf/options.js";
 import pdfTemplate from "../../utils/pdf/pdfTemplate.js";
+import expressAsyncHandler from "express-async-handler";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -15,7 +16,7 @@ const filepath = path.join(__dirname, "../../docs/myDocument.pdf");
 // $-path    POST /api/v1/document/generate-pdf
 // $-auth    Public
 
-export const generatePdf = asyncHandler(async (req, res) => {
+export const generatePdf = expressAsyncHandler(async (req, res) => {
   pdf.create(pdfTemplate(req.body), options).toFile("myDocument.pdf", (err) => {
     if (err) {
       res.send(APromise.reject());
