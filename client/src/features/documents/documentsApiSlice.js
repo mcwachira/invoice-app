@@ -50,7 +50,7 @@ export const {
   useGetAllMyDocsQuery,
   useCreateDocMutation,
   useGetSingleDocQuery,
-  useUpdateDocInfoMutation,
+  useUpdateDocMutation,
   useDeleteDocMutation,
   useCreatePaymentMutation,
 } = documentsApiSlice;

@@ -28,6 +28,8 @@ import CustomersPage from "./features/customers/pages/CustomersPage";
 import CustomerCreateForm from "./features/customers/pages/CustomerCreateForm";
 import SingleCustomerPage from "./features/customers/pages/SingleCustomer";
 import CustomerEditForm from "./features/customers/pages/CustomerEditForm";
+import DocCreateEditForm from "./features/documents/pages/DocCreateEditForm";
+import DocumentsPage from "./features/documents/pages/DocumentsPage";
 
 const App = () => {
   useTitle("Invoice app -Home");
@@ -67,6 +69,8 @@ const App = () => {
               path="edit-customer/:custId"
               element={<CustomerEditForm />}
             />
+            <Route path="documents" element={<DocumentsPage />} />
+            <Route path="create-doc" element={<DocCreateEditForm />} />
           </Route>
           {/* private routes - Admin */}
           <Route element={<AuthRequired allowedRoles={[ROLES.Admin]} />}>
