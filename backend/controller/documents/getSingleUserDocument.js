@@ -7,6 +7,7 @@ import Document from "../../models/documentModel.js";
 
 const getSingleUserDocument = asyncHandler(async (req, res) => {
   const document = await Document.findById(req.params.id);
+  // console.log(document);
 
   const user = req.user._id;
 

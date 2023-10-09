@@ -28,3 +28,5 @@ const createDocumentPayment = asyncHandler(async (req, res) => {
     message: "Payment has been recoded successfully",
   });
 });
+
+export default createDocumentPayment;

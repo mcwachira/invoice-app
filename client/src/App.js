@@ -20,7 +20,6 @@ import PasswordResetRequestPage from "./features/auth/pages/PasswordResetRequest
 import PasswordResetPage from "./features/auth/pages/PasswordResetPage";
 import AuthRequired from "./components/AuthRequired";
 import { ROLES } from "./config/roles";
-import DashBoardPage from "./pages/DashBoardPage";
 import UsersListPage from "./features/users/pages/UsersListPage";
 import ProfilePage from "./features/users/pages/ProfilePage";
 import EditProfileForm from "./features/users/pages/EditProfileForm";
@@ -30,6 +29,8 @@ import SingleCustomerPage from "./features/customers/pages/SingleCustomer";
 import CustomerEditForm from "./features/customers/pages/CustomerEditForm";
 import DocCreateEditForm from "./features/documents/pages/DocCreateEditForm";
 import DocumentsPage from "./features/documents/pages/DocumentsPage";
+import SingleDocPage from "./features/documents/pages/SingleDocPage";
+import DashBoardPage from "./features/dashboard/page/DashBoardPage";
 
 const App = () => {
   useTitle("Invoice app -Home");
@@ -71,6 +72,9 @@ const App = () => {
             />
             <Route path="documents" element={<DocumentsPage />} />
             <Route path="create-doc" element={<DocCreateEditForm />} />
+
+            <Route path="edit-doc/:id" element={<DocCreateEditForm />} />
+            <Route path="document/:id" element={<SingleDocPage />} />
           </Route>
           {/* private routes - Admin */}
           <Route element={<AuthRequired allowedRoles={[ROLES.Admin]} />}>

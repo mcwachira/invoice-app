@@ -24,7 +24,6 @@ const deleteDocument = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     message: `${document.name} was deleted successfully `,
-    updatedDocumentInfo,
   });
 });
 

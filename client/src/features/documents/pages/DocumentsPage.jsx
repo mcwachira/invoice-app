@@ -155,7 +155,7 @@ const DocumentsPage = () => {
 
       {isLoading ? (
         <Spinner />
-      ) : !rows.length ? (
+      ) : !rows?.length ? (
         <DocumentSVG />
       ) : (
         <TableContainer

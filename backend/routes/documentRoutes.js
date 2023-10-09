@@ -5,11 +5,13 @@ import createDocument from "../controller/documents/createDocument.js";
 import getAllUserDocuments from "../controller/documents/getAllUsersDocuments.js";
 import getSingleUserDocument from "../controller/documents/getSingleUserDocument.js";
 import deleteDocument from "../controller/documents/deleteDocument.js";
+
 import {
-  generatePdf,
-  getPdf,
+  generatePDF,
+  getPDF,
   sendDocument,
 } from "../controller/documents/generatePdf.js";
+import createDocumentPayment from "../controller/documents/createPayment.js";
 
 const router = express.Router();
 
@@ -18,6 +20,10 @@ router.route("/create").post(checkAuth, createDocument);
 
 //get all documents at /api/v1/document/all
 router.route("/all").get(checkAuth, getAllUserDocuments);
+
+//create document payment
+
+router.route("/:id/payment").post(checkAuth, createDocumentPayment);
 
 //get a single  document at /api/v1/document/single
 router.route("/:id").get(checkAuth, getSingleUserDocument);
@@ -29,9 +35,9 @@ router.route("/:id").patch(checkAuth, updateDocumentInfo);
 router.route("/:id").delete(checkAuth, deleteDocument);
 
 // generate PDF document at /api/v1/document/generate-pdf
-router.route("/generate-pdf").post(generatePdf);
+router.route("/generate-pdf").post(generatePDF);
 // get pdf at /api/v1/document/get-pdf
-router.route("/get-pdf").get(getPdf);
+router.route("/get-pdf").get(getPDF);
 // send email with pdf at /api/v1/document/send-document
 router.route("/send-pdf").post(sendDocument);
 

@@ -5,32 +5,28 @@ import transporter from "../../helpers/emailTransport.js";
 import emailTemplate from "../../utils/pdf/emailTemplate.js";
 import options from "../../utils/pdf/options.js";
 import pdfTemplate from "../../utils/pdf/pdfTemplate.js";
-import expressAsyncHandler from "express-async-handler";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const filepath = path.join(__dirname, "../../docs/myDocument.pdf");
+const filepath = path.join(__dirname, "../../../docs/myDocument.pdf");
 
-// $-title  GenerateDocument
+// $-title   Generate document
 // $-path    POST /api/v1/document/generate-pdf
 // $-auth    Public
-
-export const generatePdf = expressAsyncHandler(async (req, res) => {
+export const generatePDF = async (req, res) => {
   pdf.create(pdfTemplate(req.body), options).toFile("myDocument.pdf", (err) => {
     if (err) {
-      res.send(APromise.reject());
+      return res.send(Promise.reject());
     }
-
-    res.send(Promise.resolve());
+    return res.send(Promise.resolve());
   });
-});
+};
 
-// $-title  GenerateDocument
+// $-title   Generate document
 // $-path    GET /api/v1/document/get-pdf
 // $-auth    Public
-
-export const getPdf = (req, res) => {
+export const getPDF = (req, res) => {
   res.sendFile(filepath);
 };
 
@@ -62,8 +58,8 @@ export const sendDocument = (req, res) => {
     });
 
     if (err) {
-      res.send(Promise.reject());
+      return res.send(Promise.reject());
     }
-    res.send(Promise.resolve());
+    return res.send(Promise.resolve());
   });
 };
